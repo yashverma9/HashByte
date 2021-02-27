@@ -29,6 +29,7 @@ export default {
     return {
       message: "a",
       topic:[{msg:"hello"}],
+      id:"3"
     };
   },
   async mounted() {
@@ -40,7 +41,7 @@ export default {
   },
   methods: {
     router() {
-      this.$router.push({ name: 'Dashboard', params: { message: this.message } })
+      this.$router.push({ name: 'Dashboard', params: { id: this.id } })
 
     }
   }

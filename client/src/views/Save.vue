@@ -13,47 +13,19 @@
             <th>Source</th>
             <th>Link</th>
           </tr>
-          <tr>
-            <td>1</td>
+          <tr v-for="(f, index) in final" :key="index">
+            <td>{{index}}</td>
             <td>
-              Machine learning is the study of computer algorithms that improve
-              automatically through experience. It is seen as a part of
-              artificial intelligence. v
+              {{f.definition}}
             </td>
             <td>AR</td>
             <td>
-              <div class="save-button">
+              <div  @click="open(f.id)" class="save-button">
                 <p>Open</p>
               </div>
             </td>
           </tr>
-                <tr>
-            <td>1</td>
-            <td>
-              Machine learning is the study of computer algorithms that improve
-              automatically through experience. It is seen as a part of
-              artificial intelligence. v
-            </td>
-            <td>AR</td>
-            <td>
-              <div class="save-button">
-                <p>Open</p>
-              </div>
-            </td>
-          </tr>
-                <tr>
-            <td>1</td>
-            <td>
-              Machine learning is the study of computer algorithms that improve
-              automat
-            </td>
-            <td>AR</td>
-            <td>
-              <div class="save-button">
-                <p>Open</p>
-              </div>
-            </td>
-          </tr>
+         
         </table>
       </div>
     </div>
@@ -61,15 +33,33 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Save",
+  async mounted() {
+    let res = await axios.get("http://127.0.0.1:5000/api/getAllItem");
+    this.data=res.data;
+    console.log(this.data);
+    for(let i=0; i<this.data.length;i++)
+    {
+        if(this.data[i].selected == 1)
+        {
+            this.final.push(this.data[i])
+            console.log(this.final)
+        }
+    }
+  },
   data() {
     return {
-      key: 1
+      data: [],
+      final: []
     };
   },
   methods: {
-    name() {}
+    open(x) {
+        console.log(x)
+        this.$router.push({ name: 'Dashboard', params: { id: x } })
+    }
   }
 };
 </script>

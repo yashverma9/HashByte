@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div v-bind:class="{ show: showpopup }" class="popup">
+      <p id="ok-p">Save Successfull</p>
+      <div id="ok" @click="popup()" class="save-button">
+        <p>Ok</p>
+      </div>
+    </div>
     <div class="header">
       <div class="img-container">
         <img src="../images/text-format.png" alt="" />
@@ -12,8 +18,27 @@
 
     <div class="definition box">
       <div class="save">
+        <p>Add Note</p>
+        <div @click="save()" class="save-button">
+          <p>save</p>
+        </div>
+      </div>
+
+      <div style="padding:10px;" class="def-box white-box">
+        <textarea
+          id="text-area"
+          value="Add notes here to save"
+          @input="notes($event.target.value)"
+          rows="5"
+          cols="50"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="definition box">
+      <div class="save">
         <p>Definition</p>
-        <div class="save-button">
+        <div @click="save()" class="save-button">
           <p>save</p>
         </div>
       </div>
@@ -24,8 +49,6 @@
             <span>#</span>
             <p>
               {{ definition }}
-
-             {{definition}}
             </p>
           </li>
         </ul>
@@ -35,7 +58,7 @@
     <div class="related box">
       <div class="save">
         <p>Related Links</p>
-        <div class="save-button">
+        <div @click="save()" class="save-button">
           <p>save</p>
         </div>
       </div>
@@ -49,7 +72,7 @@
                 target="blank"
                 href=" https://en.wikipedia.org/wiki/Machine_learning"
               >
-               {{l}}
+                {{ l }}
               </a>
             </p>
           </li>
@@ -60,19 +83,15 @@
     <div class="photos box">
       <div class="save">
         <p>Photos</p>
-        <div class="save-button">
+        <div @click="save()" class="save-button">
           <p>save</p>
         </div>
       </div>
       <div class="photos-box white-box">
         <ul>
-          <li>
-            <img
-              :src="image"
-              alt=""
-            />
+          <li v-for="(i, index) in image" :key="index">
+            <img :src="i" alt="" />
           </li>
-          
         </ul>
       </div>
     </div>
@@ -80,19 +99,18 @@
     <div class="videos box">
       <div class="save">
         <p>Videos</p>
-        <div class="save-button">
+        <div @click="save()" class="save-button">
           <p>save</p>
         </div>
       </div>
       <div class="videos-box white-box">
         <ul>
- 
-          <li>
+          <li v-for="(v, index) in video" :key="index">
             <iframe
               class="vid"
               width="100%"
               height="100%"
-              :src="video"
+              :src="v"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
@@ -111,16 +129,18 @@ export default {
 
   data() {
     return {
-      message: " ",
+      id: " ",
       data: [],
       definition: "",
       relatedLinks: [],
-      image: "",
-      video: ""
+      image: [],
+      video: [],
+      note: "",
+      showpopup: false
     };
   },
   created() {
-    this.message = this.$route.params.message;
+    this.id = this.$route.params.id;
     console.log(this.$route.params);
   },
   watch: {
@@ -129,15 +149,50 @@ export default {
   },
   async mounted() {
     console.log("i am called");
-    let res = await axios.get("http://127.0.0.1:5000/api/getCurrentItem");
-    console.log(res.data)
+    let params = {
+      id: this.id
+    };
+
+    let res = await axios.get("http://127.0.0.1:5000/api/getCurrentItem", {
+      params
+    });
+
+    console.log(res.data);
     this.definition = res.data.definition;
     this.relatedLinks = res.data.relatedLinks;
     this.image = res.data.image;
     this.video = res.data.video;
   },
   methods: {
-    name() {}
+    notes(x) {
+      this.note = x;
+      console.log(this.note);
+    },
+    async save() {
+      console.log("posted");
+        let params = {
+      id: this.id
+    };
+       let a = await axios.get('http://127.0.0.1:5000/api/saveItem',{params});
+       console.log(a)
+
+        this.api2();
+      this.popup();
+    },
+    popup() {
+      this.showpopup = !this.showpopup;
+    },
+    async api2()
+    {
+      let params = {
+        id: this.id,
+        note: "fwsfg"
+      };
+      console.log(params);
+
+      let b = await axios.get("http://127.0.0.1:5000/api/postNote", {params});
+      console.log(b);
+    }
   }
 };
 </script>
@@ -364,6 +419,7 @@ export default {
   max-height: 70vh;
   overflow-y: scroll;
   ul {
+    padding: 0;
     //border: dotted red;
     list-style-type: none;
     display: flex;
@@ -375,8 +431,8 @@ export default {
     }
   }
   img {
-    max-width: 500px;
-    max-height: 500px;
+    max-width: 400px;
+    max-height: 400px;
   }
 }
 
@@ -445,5 +501,43 @@ export default {
 
 .save-button:hover {
   background: rgb(211, 203, 43);
+}
+
+#text-area {
+  border: none;
+  width: 100%;
+  height: 99%;
+  outline: #195ed8;
+}
+
+.popup {
+  display: none;
+  width: 70vw;
+  height: 18vh;
+  background: #195ed8;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#ok {
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+#ok-p {
+  font-size: 30px;
+  font-weight: 500;
+  text-align: center;
+  color: #ffffff;
+}
+.show {
+  display: block;
 }
 </style>
