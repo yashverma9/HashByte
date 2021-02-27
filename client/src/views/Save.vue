@@ -14,11 +14,11 @@
             <th>Link</th>
           </tr>
           <tr v-for="(f, index) in final" :key="index">
-            <td>{{index}}</td>
+            <td>{{index +1}}</td>
             <td>
               {{f.definition}}
             </td>
-            <td>AR</td>
+            <td>Audio</td>
             <td>
               <div  @click="open(f.id)" class="save-button">
                 <p>Open</p>
@@ -58,7 +58,7 @@ export default {
   methods: {
     open(x) {
         console.log(x)
-        this.$router.push({ name: 'Dashboard', params: { id: x } })
+        this.$router.push({ name: 'Savedashboard', params: { id: x } })
     }
   }
 };

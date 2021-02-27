@@ -3,13 +3,14 @@
     <p class="heading">Select text to view more info</p>
     <div class="box">
       <ul>
-        <li v-for="(t, index) in topic" :key="index" @click="router()">
+        <li v-for="(t, index) in x" :key="index" @click="router()">
           <div class="li-element">
             <div class="img-container">
               <img src="../images/text-format.png" alt="" />
             </div>
             <p class="meet-text">
-              {{ t.msg }}
+              {{t.id}}
+              {{t.text}}
             </p>
           </div>
         </li>
@@ -26,32 +27,80 @@ export default {
   data() {
     return {
       message: "a",
-      topic: [{ msg: "hello" }],
-      id: "3",
-      counter: 0,
+      topic: [],
+      final:[],
+      x:[],
+      id: 1,
+     
     };
   },
   async mounted() {
-    console.log("i am called");
-    this.interval = setInterval(() => {
-      this.counter++;
-      console.log(this.counter);
-      let params = {
-        id: this.counter,
-      };
-      console.log(params);
-      let res = await axios.get("http://127.0.0.1:5000/api/getRealTimeItems", {
-        params,
-      });
-      console.log(res.data);
+     let params = {
+      id: this.id
+    };
+      
+    let res = await axios.get("http://127.0.0.1:5000/api/getRealTimeItems", {
+      params
+    });
+       if(res.data.msg!="end")
+    {
+        this.topic = [];
+        this.topic.push(res.data)
+    }
+  
+    
+    this.arrayslice()
+   
+    this.interval = setInterval(async() => {
+
+      ++this.id;
+
+       let params = {
+      id: this.id
+    };
+      console.log(params)
+    let res = await axios.get("http://127.0.0.1:5000/api/getRealTimeItems", {
+      params
+    });
+    // this.topic = []
+    if(res.data.msg!="end")
+    {
+        this.topic = [];
+        this.topic.push(res.data)
+    }
+  
+    
+    this.arrayslice()
     }, 10000);
-    // let res = await axios.post('http://localhost:8080/loginUser');
+
+
   },
   methods: {
     router() {
-      this.$router.push({ name: "Dashboard", params: { id: this.id } });
+      this.$router.push({ name: "Dashboard", params: { id: 1 } });
     },
-  },
+    arrayslice()
+    {
+      console.log(this.topic)
+      this.final = [];
+      this.final.push(this.topic[0].data)
+      this.x=this.final[0]
+      console.log(this.x)
+      for(let i=0;i<this.topic.length;i++)
+      {
+        if(this.topic[i].msg=="end")
+        {
+          console.log("end here")
+          clearInterval(this.interval);
+          console.log("cleared")
+        }
+      }
+      // console.log("this is topic")
+      // console.log(this.topic)
+      // console.log("this is element")
+      // console.log(this.topic[0])
+    }
+  }
 };
 </script>
 
