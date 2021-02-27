@@ -29,7 +29,7 @@ def saveItem():
         if inst["id"] == id_a:
             inst["selected"] = "1"
     with open('sample-data.json', 'w') as f:
-        json.dump(sample_data, f )
+        json.dump(sample_data, f)
     return jsonify({"msg":"success"})
 
 
@@ -39,5 +39,18 @@ def getCurrenItem():
         sample_data = json.load(f)
     return jsonify(sample_data[1])
 
+@app.route('/api/postNote',  methods = ["POST"])
+def postNote():
+    id_a = request.form.get('id')
+    note = request.form.get('note')
+    with open('sample-data.json') as f:
+        sample_data = json.load(f)    
+    for inst in sample_data:
+        if inst["id"] == id_a:
+            inst["note"] = note
+    with open('sample-data.json', 'w') as f:
+        json.dump(sample_data, f)
+    return jsonify({"msg":"success"})
+ 
 if __name__ == "__main__":
     app.run(debug=True)
