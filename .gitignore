@@ -59,6 +59,9 @@ typings/
 .rts2_cache_es/
 .rts2_cache_umd/
 
+sample-data.json
+
+
 # Optional REPL history
 .node_repl_history
 
