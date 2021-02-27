@@ -2,10 +2,22 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Save from '../views/Save.vue'
+import Savedashboard from '../views/Savedashboard.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/saved',
+    name: 'Savedashboard',
+    component: Savedashboard
+  },
+  {
+    path: '/save',
+    name: 'Save',
+    component: Save
+  },
   {
     path: '/dashboard',
     name: 'Dashboard',

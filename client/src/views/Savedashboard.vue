@@ -11,19 +11,16 @@
     </div>
 
     <div class="definition box">
-      <div class="save">
-        <p>Definition</p>
-        <div class="save-button">
-          <p>save</p>
-        </div>
-      </div>
+      <p>Definition</p>
 
       <div class="def-box white-box">
         <ul>
           <li>
             <span>#</span>
             <p>
-            {{message}}
+              Machine learning is the study of computer algorithms that improve
+              automatically through experience. It is seen as a part of
+              artificial intelligence. v
             </p>
           </li>
           <li>
@@ -63,12 +60,8 @@
     </div>
 
     <div class="related box">
-      <div class="save">
-        <p>Related Links</p>
-        <div class="save-button">
-          <p>save</p>
-        </div>
-      </div>
+      <p>Related Links</p>
+
       <div class="related-box white-box">
         <ul>
           <li>
@@ -149,12 +142,8 @@
     </div>
 
     <div class="photos box">
-      <div class="save">
-        <p>Photos</p>
-        <div class="save-button">
-          <p>save</p>
-        </div>
-      </div>
+      <p>Photos</p>
+
       <div class="photos-box white-box">
         <ul>
           <li>
@@ -187,12 +176,9 @@
     </div>
 
     <div class="videos box">
-      <div class="save">
+      
         <p>Videos</p>
-        <div class="save-button">
-          <p>save</p>
-        </div>
-      </div>
+    
       <div class="videos-box white-box">
         <ul>
           <li>
@@ -225,26 +211,12 @@
 </template>
 
 <script>
-// import axios from "axios";
 export default {
-  name: "Dashboard",
-
+  name: "Savedashboard",
   data() {
     return {
-      message: " "
+      key: 1
     };
-  },
-  created() {
-    this.message = this.$route.params.message
-    console.log(this.$route.params)
-  },
-    watch: {
-    // call again the method if the route changes
-    '$route': '/dashboard'
-  },
-  async mounted() {
-    console.log("i am called");
-    // let res = await axios.post('http://localhost:8080/loginUser');
   },
   methods: {
     name() {}

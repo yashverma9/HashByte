@@ -3,7 +3,7 @@
     <p class="heading">Select text to view more info</p>
     <div class="box">
       <ul>
-        <li>
+        <li @click="router()">
           <div class="li-element">
             <div class="img-container">
               <img src="../images/text-format.png" alt="" />
@@ -29,7 +29,7 @@
           </div>
         </li>
 
-             <li>
+        <li>
           <div class="li-element">
             <div class="img-container">
               <img src="../images/text-format.png" alt="" />
@@ -38,20 +38,17 @@
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
-
-                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
-
-
-                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
             </p>
           </div>
         </li>
 
-             <li>
+        <li>
           <div class="li-element">
             <div class="img-container">
               <img src="../images/text-format.png" alt="" />
@@ -63,7 +60,7 @@
           </div>
         </li>
 
-             <li>
+        <li>
           <div class="li-element">
             <div class="img-container">
               <img src="../images/text-format.png" alt="" />
@@ -72,8 +69,7 @@
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
-
-                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
             </p>
@@ -91,11 +87,21 @@ export default {
   name: "Home",
   data() {
     return {
-      key: 1
+      message: "a"
     };
   },
+  async mounted() {
+    console.log("i am called");
+       this.interval = setInterval(() => {
+      console.log("oh yeah call me")
+    }, 1000);
+    // let res = await axios.post('http://localhost:8080/loginUser');
+  },
   methods: {
-    name() {}
+    router() {
+      this.$router.push({ name: 'Dashboard', params: { message: this.message } })
+
+    }
   }
 };
 </script>
@@ -134,7 +140,7 @@ export default {
 
 .li-element {
   cursor: pointer;
- // border: solid red;
+  // border: solid red;
   width: 100%;
   min-height: 30px;
   display: flex;
