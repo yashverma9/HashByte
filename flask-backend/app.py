@@ -6,14 +6,15 @@ import wave
 from ibm_watson import SpeechToTextV1
 from ibm_watson.websocket import RecognizeCallback, AudioSource
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-
+from flask_cors import CORS
 
 original_stdout = sys.stdout
 app = Flask(__name__)
+CORS(app)
 app.static_folder = 'static'
 app.secret_key = 'the random string'
 
-test_data = [{"color": "red"},{"color": "blue"},{"color": "pink"}]
+test_data = [{"color": "red"}, {"color": "blue"}, {"color": "pink"}]
 
 
 apikey = '-XOpPXfHPTI5jnjjyQprxFoh5NFcDpY1CjdZ6Atnjubn'
@@ -25,17 +26,15 @@ stt = SpeechToTextV1(authenticator=authenticator)
 stt.set_service_url(url)
 
 
-
-#Function for generating live audio clips
+# Function for generating live audio clips
 def recording():
-    global cnt
     CHUNK = 1024
     FORMAT = pyaudio.paInt16
     CHANNELS = 2
     RATE = 44100
     RECORD_SECONDS = 10
     WAVE_OUTPUT_FILENAME = "output.wav"
-    
+
     p = pyaudio.PyAudio()
 
     stream = p.open(format=FORMAT,
@@ -66,14 +65,13 @@ def recording():
     wf.close()
 
 
-
-#print(sample_data[0]["selected"])
+# print(sample_data[0]["selected"])
 
 @app.route('/api/getAllItem')
 def getAllJson():
     with open('sample-data.json') as f:
         sample_data = json.load(f)
-    return jsonify(sample_data) 
+    return jsonify(sample_data)
 
 
 @app.route('/api/saveItem', )
@@ -82,13 +80,14 @@ def saveItem():
     print("saveitem")
     print(id_a)
     with open('sample-data.json') as f:
-         sample_data = json.load(f)
+        sample_data = json.load(f)
     for inst in sample_data:
         if inst["id"] == id_a:
             inst["selected"] = "1"
     with open('sample-data.json', 'w') as f:
-        json.dump(sample_data, f )
-    return jsonify({"msg":"success"})
+        json.dump(sample_data, f)
+    return jsonify({"msg": "success"})
+
 
 @app.route('/api/postNote')
 def postNote():
@@ -98,39 +97,40 @@ def postNote():
     print(id_a)
     print(note)
     with open('sample-data.json') as f:
-        sample_data = json.load(f)    
+        sample_data = json.load(f)
     for inst in sample_data:
         if inst["id"] == id_a:
             inst["note"] = note
     with open('sample-data.json', 'w') as f:
         json.dump(sample_data, f)
-    return jsonify({"msg":"success"})
+    return jsonify({"msg": "success"})
+
 
 @app.route('/api/getRealTimeItems')
 def getRealTimeItems():
+    recording()
     id_a = request.args['id']
-    with open('output{}.wav'.format(k), 'rb') as f:
+    with open('output.wav', 'rb') as f:
         res = stt.recognize(audio=f, content_type='audio/wav',
                             model='en-US_NarrowbandModel', continuous=True).get_result()
 
     text = ""
     for i in range(0, len(res['results'])):
         text += res['results'][i]['alternatives'][0]['transcript']
+    print(text)
     if text == "":
-        return jsonify({"msg":"end"})
+        return jsonify({"msg": "end"})
     else:
-        with open('data.json') as json_file: 
-        data = json.load(json_file) 
+        with open('real-data.json') as json_file:
+            data = json.load(json_file)
 
-        #python object to be appended 
-        y = {"id": id_a, "temp":temp} 
-        #appending data to emp_details  
-        data.append(y) 
+        # appending data to emp_details
+        data[id_a] = text
         with open('real-data.json', 'w') as f:
             json.dump(data, f)
         return jsonify(data)
-    
-    
+
+
 @app.route('/api/getCurrentItem')
 def getCurrenItem():
     idx = request.args['id']
@@ -138,7 +138,6 @@ def getCurrenItem():
     with open('sample-data.json') as f:
         sample_data = json.load(f)
     return jsonify(sample_data[int(idx)-1])
-
 
 
 if __name__ == "__main__":

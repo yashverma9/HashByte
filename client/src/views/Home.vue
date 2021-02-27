@@ -3,18 +3,16 @@
     <p class="heading">Select text to view more info</p>
     <div class="box">
       <ul>
-        <li  v-for="(t, index) in topic" :key="index" @click="router()">
+        <li v-for="(t, index) in topic" :key="index" @click="router()">
           <div class="li-element">
             <div class="img-container">
               <img src="../images/text-format.png" alt="" />
             </div>
             <p class="meet-text">
-              {{t.msg}}
+              {{ t.msg }}
             </p>
           </div>
         </li>
-
-       
       </ul>
     </div>
   </div>
@@ -22,29 +20,38 @@
 
 <script>
 // @ is an alias to /src
-
+import axios from "axios";
 export default {
   name: "Home",
   data() {
     return {
       message: "a",
-      topic:[{msg:"hello"}],
-      id:"3"
+      topic: [{ msg: "hello" }],
+      id: "3",
+      counter: 0,
     };
   },
   async mounted() {
-    // console.log("i am called");
-    //    this.interval = setInterval(() => {
-    //   console.log("oh yeah call me")
-    // }, 1000);
+    console.log("i am called");
+    this.interval = setInterval(() => {
+      this.counter++;
+      console.log(this.counter);
+      let params = {
+        id: this.counter,
+      };
+      console.log(params);
+      let res = await axios.get("http://127.0.0.1:5000/api/getRealTimeItems", {
+        params,
+      });
+      console.log(res.data);
+    }, 10000);
     // let res = await axios.post('http://localhost:8080/loginUser');
   },
   methods: {
     router() {
-      this.$router.push({ name: 'Dashboard', params: { id: this.id } })
-
-    }
-  }
+      this.$router.push({ name: "Dashboard", params: { id: this.id } });
+    },
+  },
 };
 </script>
 
