@@ -3,78 +3,18 @@
     <p class="heading">Select text to view more info</p>
     <div class="box">
       <ul>
-        <li @click="router()">
+        <li  v-for="(t, index) in topic" :key="index" @click="router()">
           <div class="li-element">
             <div class="img-container">
               <img src="../images/text-format.png" alt="" />
             </div>
             <p class="meet-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
+              {{t.msg}}
             </p>
           </div>
         </li>
 
-        <li>
-          <div class="li-element">
-            <div class="img-container">
-              <img src="../images/text-format.png" alt="" />
-            </div>
-            <p class="meet-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
-            </p>
-          </div>
-        </li>
-
-        <li>
-          <div class="li-element">
-            <div class="img-container">
-              <img src="../images/text-format.png" alt="" />
-            </div>
-            <p class="meet-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
-            </p>
-          </div>
-        </li>
-
-        <li>
-          <div class="li-element">
-            <div class="img-container">
-              <img src="../images/text-format.png" alt="" />
-            </div>
-            <p class="meet-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labboris ni
-            </p>
-          </div>
-        </li>
-
-        <li>
-          <div class="li-element">
-            <div class="img-container">
-              <img src="../images/text-format.png" alt="" />
-            </div>
-            <p class="meet-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris ni
-            </p>
-          </div>
-        </li>
+       
       </ul>
     </div>
   </div>
@@ -87,14 +27,15 @@ export default {
   name: "Home",
   data() {
     return {
-      message: "a"
+      message: "a",
+      topic:[{msg:"hello"}],
     };
   },
   async mounted() {
-    console.log("i am called");
-       this.interval = setInterval(() => {
-      console.log("oh yeah call me")
-    }, 1000);
+    // console.log("i am called");
+    //    this.interval = setInterval(() => {
+    //   console.log("oh yeah call me")
+    // }, 1000);
     // let res = await axios.post('http://localhost:8080/loginUser');
   },
   methods: {
