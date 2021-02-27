@@ -4,7 +4,7 @@ import pyaudio
 import wave
 
 
-cnt = 9
+cnt = 0 
 
 
 def recording():
