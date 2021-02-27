@@ -1,7 +1,7 @@
 import urllib.request
 from bs4 import BeautifulSoup
 
-query = "wind-energy"
+query = "heart"
 
 url = 'https://google.com/search?q=' + query
 
