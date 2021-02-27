@@ -110,6 +110,8 @@ def postNote():
 def getRealTimeItems():
     recording()
     id_a = request.args['id']
+    if id_a == "5":
+        return jsonify({"msg": "end"})    
     with open('output.wav', 'rb') as f:
         res = stt.recognize(audio=f, content_type='audio/wav',
                             model='en-US_NarrowbandModel', continuous=True).get_result()
@@ -124,8 +126,7 @@ def getRealTimeItems():
         with open('real-data.json') as json_file:
             data = json.load(json_file)
 
-        # appending data to emp_details
-        data[id_a] = text
+        data["data"].append({"id": id_a, "text": text})
         with open('real-data.json', 'w') as f:
             json.dump(data, f)
         return jsonify(data)
