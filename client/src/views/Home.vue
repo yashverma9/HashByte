@@ -4,12 +4,12 @@
     <div class="box">
       <ul>
         <li v-for="(t, index) in x" :key="index" @click="router()">
-          <div class="li-element">
+          <div  @click="router(t.text)" class="li-element">
             <div class="img-container">
               <img src="../images/text-format.png" alt="" />
             </div>
             <p class="meet-text">
-              {{t.id}}
+    
               {{t.text}}
             </p>
           </div>
@@ -30,26 +30,26 @@ export default {
       topic: [],
       final:[],
       x:[],
-      id: 1,
+      id: 0,
      
     };
   },
   async mounted() {
-     let params = {
-      id: this.id
-    };
+    //  let params = {
+    //   id: this.id
+    // };
       
-    let res = await axios.get("http://127.0.0.1:5000/api/getRealTimeItems", {
-      params
-    });
-       if(res.data.msg!="end")
-    {
-        this.topic = [];
-        this.topic.push(res.data)
-    }
+    // let res = await axios.get("http://127.0.0.1:5000/api/getRealTimeItems", {
+    //   params
+    // });
+    //    if(res.data.msg!="end")
+    // {
+    //     this.topic = [];
+    //     this.topic.push(res.data)
+    // }
   
     
-    this.arrayslice()
+    // this.arrayslice()
    
     this.interval = setInterval(async() => {
 
@@ -71,13 +71,13 @@ export default {
   
     
     this.arrayslice()
-    }, 10000);
+    }, 4000);
 
 
   },
   methods: {
-    router() {
-      this.$router.push({ name: "Dashboard", params: { id: 1 } });
+    router(x) {
+      this.$router.push({ name: "Dashboard", params: { id: 1 , st:x} });
     },
     arrayslice()
     {

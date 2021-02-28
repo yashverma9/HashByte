@@ -10,9 +10,8 @@
       <div class="img-container">
         <img src="../images/text-format.png" alt="" />
       </div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing eelipor incididunt ut
-        laboreelip
+      <p style="font-size:28px;">
+        Heart
       </p>
     </div>
 

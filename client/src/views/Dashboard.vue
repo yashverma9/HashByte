@@ -10,9 +10,8 @@
       <div class="img-container">
         <img src="../images/text-format.png" alt="" />
       </div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing eelipor incididunt ut
-        laboreelip
+      <p style="font-size:28px;">
+        Heart
       </p>
     </div>
 
@@ -136,11 +135,13 @@ export default {
       image: [],
       video: [],
       note: "",
-      showpopup: false
+      showpopup: false,
+      st:""
     };
   },
   created() {
     this.id = this.$route.params.id;
+    this.st = this.$route.params.st;
     console.log(this.$route.params);
   },
   watch: {

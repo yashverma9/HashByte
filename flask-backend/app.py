@@ -17,52 +17,52 @@ app.secret_key = 'the random string'
 test_data = [{"color": "red"}, {"color": "blue"}, {"color": "pink"}]
 
 
-apikey = '-XOpPXfHPTI5jnjjyQprxFoh5NFcDpY1CjdZ6Atnjubn'
-url = 'https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/cf343907-bfbf-4fda-b324-0c3b1eab5cff'
+# apikey = '-XOpPXfHPTI5jnjjyQprxFoh5NFcDpY1CjdZ6Atnjubn'
+# url = 'https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/cf343907-bfbf-4fda-b324-0c3b1eab5cff'
 
-# Setup Service
-authenticator = IAMAuthenticator(apikey)
-stt = SpeechToTextV1(authenticator=authenticator)
-stt.set_service_url(url)
+# # Setup Service
+# authenticator = IAMAuthenticator(apikey)
+# stt = SpeechToTextV1(authenticator=authenticator)
+# stt.set_service_url(url)
 
 
-# Function for generating live audio clips
-def recording():
-    CHUNK = 1024
-    FORMAT = pyaudio.paInt16
-    CHANNELS = 2
-    RATE = 44100
-    RECORD_SECONDS = 10
-    WAVE_OUTPUT_FILENAME = "output.wav"
+# # Function for generating live audio clips
+# def recording():
+#     CHUNK = 1024
+#     FORMAT = pyaudio.paInt16
+#     CHANNELS = 2
+#     RATE = 44100
+#     RECORD_SECONDS = 10
+#     WAVE_OUTPUT_FILENAME = "output.wav"
 
-    p = pyaudio.PyAudio()
+#     p = pyaudio.PyAudio()
 
-    stream = p.open(format=FORMAT,
-                    channels=CHANNELS,
-                    rate=RATE,
-                    input=True,
-                    frames_per_buffer=CHUNK)
+#     stream = p.open(format=FORMAT,
+#                     channels=CHANNELS,
+#                     rate=RATE,
+#                     input=True,
+#                     frames_per_buffer=CHUNK)
 
-    print("* recording")
+#     print("* recording")
 
-    frames = []
+#     frames = []
 
-    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-        data = stream.read(CHUNK)
-        frames.append(data)
+#     for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+#         data = stream.read(CHUNK)
+#         frames.append(data)
 
-    print("* done recording")
+#     print("* done recording")
 
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
+#     stream.stop_stream()
+#     stream.close()
+#     p.terminate()
 
-    wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
-    wf.setnchannels(CHANNELS)
-    wf.setsampwidth(p.get_sample_size(FORMAT))
-    wf.setframerate(RATE)
-    wf.writeframes(b''.join(frames))
-    wf.close()
+#     wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+#     wf.setnchannels(CHANNELS)
+#     wf.setsampwidth(p.get_sample_size(FORMAT))
+#     wf.setframerate(RATE)
+#     wf.writeframes(b''.join(frames))
+#     wf.close()
 
 
 # print(sample_data[0]["selected"])
@@ -105,7 +105,7 @@ def postNote():
         json.dump(sample_data, f)
     return jsonify({"msg": "success"})
 
-
+'''
 @app.route('/api/getRealTimeItems')
 def getRealTimeItems():
     recording()
@@ -130,6 +130,33 @@ def getRealTimeItems():
         with open('real-data.json', 'w') as f:
             json.dump(data, f)
         return jsonify(data)
+'''
+
+
+
+@app.route('/api/getRealTimeItems')
+def getRealTimeItems():
+    id_a = request.args['id']
+    if id_a == "7":
+        return jsonify({"msg": "end"})    
+    with open('sample-audio.json') as json_file:
+            audio = json.load(json_file)
+    
+    #for i in audio:
+    #    if i["id"] == id_a:
+    text = audio[int(id_a)-1]
+    print(text)
+    if text == "":
+        return jsonify({"msg": "end"})
+    else:
+        with open('real-data.json') as json_file:
+            data = json.load(json_file)
+
+        data["data"].append(text)
+        with open('real-data.json', 'w') as f:
+            json.dump(data, f)
+        return jsonify(data)
+
 
 
 @app.route('/api/getCurrentItem')
