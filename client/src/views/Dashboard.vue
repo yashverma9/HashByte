@@ -18,7 +18,7 @@
 
     <div class="definition box">
       <div class="save">
-        <p>Add Note</p>
+        <p>Take Note</p>
         <div @click="save()" class="save-button">
           <p>save</p>
         </div>
@@ -38,9 +38,9 @@
     <div class="definition box">
       <div class="save">
         <p>Definition</p>
-        <div @click="save()" class="save-button">
+        <!-- <div @click="save()" class="save-button">
           <p>save</p>
-        </div>
+        </div> -->
       </div>
 
       <div class="def-box white-box">
@@ -58,9 +58,9 @@
     <div class="related box">
       <div class="save">
         <p>Related Links</p>
-        <div @click="save()" class="save-button">
+        <!-- <div @click="save()" class="save-button">
           <p>save</p>
-        </div>
+        </div> -->
       </div>
       <div class="related-box white-box">
         <ul>
@@ -70,7 +70,7 @@
               <a
                 style="color:black; text-decoration:none;"
                 target="blank"
-                href=" https://en.wikipedia.org/wiki/Machine_learning"
+                :href="l"
               >
                 {{ l }}
               </a>
@@ -83,9 +83,9 @@
     <div class="photos box">
       <div class="save">
         <p>Photos</p>
-        <div @click="save()" class="save-button">
+        <!-- <div @click="save()" class="save-button">
           <p>save</p>
-        </div>
+        </div> -->
       </div>
       <div class="photos-box white-box">
         <ul>
@@ -99,9 +99,9 @@
     <div class="videos box">
       <div class="save">
         <p>Videos</p>
-        <div @click="save()" class="save-button">
+        <!-- <div @click="save()" class="save-button">
           <p>save</p>
-        </div>
+        </div> -->
       </div>
       <div class="videos-box white-box">
         <ul>
@@ -186,7 +186,7 @@ export default {
     {
       let params = {
         id: this.id,
-        note: "fwsfg"
+        note: this.note
       };
       console.log(params);
 
@@ -368,7 +368,7 @@ export default {
       font-family: Poppins;
       font-style: normal;
       font-weight: normal;
-      font-size: 14px;
+      font-size: 18px;
       line-height: 21px;
 
       color: #000000;
@@ -390,7 +390,7 @@ export default {
     margin: 0 auto;
     margin-top: 20px;
     padding: 0;
-    padding-top: 14px;
+    padding-top: 18px;
   }
   li {
     display: flex;
@@ -401,7 +401,7 @@ export default {
       font-family: Poppins;
       font-style: normal;
       font-weight: normal;
-      font-size: 14px;
+      font-size: 18px;
       line-height: 21px;
 
       color: #000000;

@@ -6,7 +6,7 @@
     </div> -->
 
     <div class="nav">
-      <h1 id="hashcash">hashcash</h1>
+      <h1 id="hashcash">hashmega</h1>
        <span id="menu" style="font-size:30px;cursor:pointer;color:white;" @click="openNav()"
         >&#9776; </span>
       
