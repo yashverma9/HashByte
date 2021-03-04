@@ -43,6 +43,8 @@ jspm_packages/
 ARApp/4_hack/Assets
 ARApp/4_hack/Library
 ARApp/Raw
+ARApp/App-Final.apk
+.apk
 # TypeScript v1 declaration files
 typings/
 
